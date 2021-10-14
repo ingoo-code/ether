@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useReducer } from "react";
 import SimpleStorageContract from "./contracts/SimpleStorage.json";
+import axios from 'axios'
 import getWeb3 from "./getWeb3";
 
 import "./App.css";
@@ -78,12 +79,38 @@ const App = () => {
     if (value > 0) {
       // SERVER API 호출
       setLoadding(prev=>!prev)
-      const result = await aixos.post('/rpc/set',{ from:account, value })
+      const result = await axios.post('http://localhost:3001/rpc/set',{ from:account, val:value })
 
       if (result.data !== undefined && result.data.rawTx !== undefined ) {
         await web3.eth.sendTransaction(result.data.rawTx)
+        /*
+          {
+              "success": true,
+              "rawTx": {
+                  "from": "address...",
+                  "to": "0xc252d66304dC32f13E546b28B6adE17338FAc5B4",
+                  "data": "0x60fe47b10000000000000000000000000000000000000000000000000000000000bc4ff2",
+                  "gasLimit": "0x2dc6c0",
+                  "gasPrice": "0x4a817c800"
+              }
+          } 
+          http://web3js.readthedocs.io/en/v.1.2.2/web3-eth.html
+          sendTransaction 에 보낼 첫번째 객체 내용들
+          from [string | Number] 보내는 계정의 주소입니다, 지정하지 않는경우에는 web3.eth.defaultAccount 속성을 사용합니다.
+          또는 web3.eth.accounts.wallet에 있는 로컬 지갑의 주소 
+        */
       }
       
+    }
+  }
+
+  const sendTx = async () => {
+    const {account} = state
+
+    if (value > 0){
+      setLoadding(prev=>!prev)
+      const result = await axios.post('http://localhost:3001/eth/setTx',{from:account,val:value})
+      console.log(result)
     }
   }
 
@@ -103,7 +130,7 @@ const App = () => {
         <div>
           <button onClick={send}>일반서명</button>
           <button onClick={sendAPI}>DB 거치고 서명</button>
-          <button>DB 서명</button>
+          <button onClick={sendTx}>DB 서명</button>
         </div>
         <div>
           {loadding ? 'loadding' : storageValue}

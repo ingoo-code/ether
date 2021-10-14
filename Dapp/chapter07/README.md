@@ -10,9 +10,15 @@
 
 2. 서버에서 바로 서명되는 경우 
 
-
+client
 npm install @truffle/contract
 npm install axios
+
+server 
+npm install ethereumjs-tx
+npm install express
+npm install web3
+npm install body-parser
 
 
 subscribe // websocket일떄만 사용이 가능합니다
