@@ -83,13 +83,15 @@ const App = () => {
 
       if (result.data !== undefined && result.data.rawTx !== undefined ) {
         await web3.eth.sendTransaction(result.data.rawTx)
+        // sendTransaction 무엇을보내면 어떤걸해주냐 
+        // 메타마스크에 서명 해주는 아이,
         /*
           {
               "success": true,
               "rawTx": {
-                  "from": "address...",
-                  "to": "0xc252d66304dC32f13E546b28B6adE17338FAc5B4",
-                  "data": "0x60fe47b10000000000000000000000000000000000000000000000000000000000bc4ff2",
+                  "from": "사용자 주소 (공개키)",
+                  "to": "코드가있는 주소",
+                  "data": "코드가있는 주소로부터 함수사용하기전 내용을 담은 바이트코드들", // 
                   "gasLimit": "0x2dc6c0",
                   "gasPrice": "0x4a817c800"
               }

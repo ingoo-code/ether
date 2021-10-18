@@ -14,19 +14,19 @@ const set = async (req,res) => {
 
     //const txCount = await web3.eth.getTransactionCount(from)
     //txObject["nonce"] = txCount;
-    txObject["from"] = from;
-    txObject["to"] = address;
-    txObject["data"] = data;
-    txObject["gasLimit"] = web3.utils.toHex(3000000)
-    txObject["gasPrice"] = web3.utils.toHex(web3.utils.toWei('20','gwei'))
+    // txObject["from"] = from;
+    // txObject["to"] = address;
+    // txObject["data"] = data;
+    // txObject["gasLimit"] = web3.utils.toHex(3000000)
+    // txObject["gasPrice"] = web3.utils.toHex(web3.utils.toWei('20','gwei'))
 
-    // let txObject = {
-    //     from,
-    //     to:addresss,
-    //     data,
-    //     gasLimit:web3.utils.toHex(3000000),
-    //     gasPrice:web3.utils.toHex(web3.utils.toWei('20','gwei'))
-    // }
+    let txObject = {
+        from,
+        to:addresss,
+        data,
+        gasLimit:web3.utils.toHex(3000000),
+        gasPrice:web3.utils.toHex(web3.utils.toWei('20','gwei'))
+    }
 
     res.json({
         success:true,

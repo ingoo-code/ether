@@ -23,8 +23,11 @@ contract Fruitshop {
   }
 
   function sellApple(uint _applePrice) payable external {
-    uint totalPrice = (myApple[msg.sender] * _applePrice);
-    myApple[msg.sender] = 0;
+    uint totalPrice = (myApple[msg.sender] * _applePrice); // 내가가진 사과 * 개당 사과값 
+    myApple[msg.sender] = 0; // 내가 보낸 주소의 myapple 수를 0으로 초기화 
     msg.sender.transfer(totalPrice);
   }
 }
+
+
+
