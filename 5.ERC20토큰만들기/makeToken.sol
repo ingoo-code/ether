@@ -74,13 +74,23 @@ contract IngToken is StandardToken {
     uint8 public decimals;  // 표시할 소수점 자릿수
     string public symbol; // 단위이름 EX 이더리움 = ETH
     string public version = "1.0"; // 
-    uint256 public uintsOneEthCanBuy; // 1ETH로 살수있는 토큰의 양
+    uint256 public unitsOneEthCanBuy; // 1ETH로 살수있는 토큰의 양
     uint256 public totalEthInWei; // ETH 저장공간 1ETH에 바꿀수있는 `uintsOneEthCanBuy` 만큼 토큰으로 교환해주는데 이후 ETH 저장하는 공간
     address public fundsWallet; //  소유자의 ETH 공간
-
+    
+    constructor() payable public {
+        balances[msg.sender] = 1000000000000000000000;               // Give the creator all initial tokens. This is set to 1000 for example. If you want your initial tokens to be X and your decimal is 5, set this value to X * 100000. (CHANGE THIS)
+        totalSupply = 1000000000000000000000;                        // Update total supply (1000 for example) (CHANGE THIS)
+        name = "ingToken";                                   // Set the name for display purposes (CHANGE THIS)
+        decimals = 18;                                               // Amount of decimals for display purposes (CHANGE THIS)
+        symbol = "ING";                                             // Set the symbol for display purposes (CHANGE THIS)
+        unitsOneEthCanBuy = 10;                                      // Set the price of your token for the ICO (CHANGE THIS)
+        fundsWallet = msg.sender;                                    // The owner of the contract gets ETH  
+    }
+    
     fallback() external payable {
         totalEthInWei = totalEthInWei + msg.value;
-        uint256 amount = msg.value * uintsOneEthCanBuy;
+        uint256 amount = msg.value * unitsOneEthCanBuy;
         require(balances[fundsWallet] >= amount); // require는 특정 조건이 참이 아닐 때 함수가 에러 메시지를 발생하고 실행을 멈추게 된다.
 
         balances[fundsWallet] = balances[fundsWallet] - amount;
